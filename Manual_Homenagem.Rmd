@@ -1,0 +1,157 @@
+---
+title: "Manual de Análise de Dados(2017)"
+author: "Zomparelli"
+date: "2022-10-15"
+output: html_document
+---
+---
+
+#### Este é um arquivo em homenagem a esses dois brilhantes brasileiros, merecedores de agradecimentos em vida, por serem professores incríveis e influenciarem tantas alunas e tantos alunos
+
+---
+
+##### A proposta aqui é aplicarmos e aprendermos todos os exemplos e exercícios desta obra utilizando a <span style = 'color: cornflowerblue'>**LINGUAGEM R**</span>
+
+---
+
+### <span style = 'color: darkblue'>**Capa do Livro e Referência**</span>
+
+---
+
+![](capa_manual.png)
+
+###### <span style = 'color: darkblue'>**Referência: Manual de análise de dados / Luiz Paulo Fávero, Patrícia Belfiore. – 1. ed. – [Reimpr.]. – Rio de Janeiro: LTC, 2022** </span>
+
+---
+
+#### <span style='color:darkcyan'>**2.2 Tabela de distribuição de frequências**</span>
+
+---
+
+```{r, results=F, warning=F, message=F}
+
+# Pacotes utilizados
+
+library(tidyverse)
+library(ggplot2)
+library(readxl)
+library(dplyr)
+
+
+```
+
+---
+
+### <span style = 'color: darkblue'>**Capítulo 2**</span>
+
+---
+
+##### <span style = 'color: darkcyan'>**Exemplo 1**</span>
+
+---
+
+###### Tabela 2.1 Total de doadores para cada tipo sanguíneo.
+
+```{r, echo = T, warning= F, results=T}
+
+# Exemplo 1: criando o dataframe
+
+tipo_sanguineo <- c('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
+
+doadores <- c(15, 2, 6, 1, 1, 1, 32, 2)
+
+matriz <- data.frame(tipo_sanguineo, doadores)
+
+print(matriz)
+
+```
+
+---
+
+##### <span style = 'color: darkcyan'>**Solução**</span>
+
+---
+
+```{r, echo = T, warning= F, results=T}
+
+# Criando a tabela de frequências com os percentuais e percentuais acumulados
+
+cumsum_matriz <- cumsum(matriz$doadores)
+
+data_freq <- data.frame(Freq.abs. = as.numeric(matriz$doadores),
+                        Freq.acc. = as.numeric(cumsum_matriz),
+                        Freq.rel. = round(as.numeric(matriz$doadores / sum(matriz$doadores)), digits = 2),
+                        Freq.rel.acc = round(as.numeric(cumsum_matriz / sum(matriz$doadores)), digits = 2))
+row.names(data_freq) <- matriz$tipo_sanguineo
+
+data_freq
+
+```
+
+
+```{r, echo = F, warning= F, results=F}
+
+# Eliminando variáveis e dataframes usados anteriormente
+
+rm(matriz)
+rm(tipo_sanguineo)
+rm(doadores)
+rm(data_freq)
+rm(cumsum_matriz)
+
+```
+---
+
+##### <span style = 'color:darkcyan'>**Exemplo 2**</span>
+
+---
+
+```{r, results=F, message=F, warning=F}
+
+# Carregando dados da minha máquina
+
+df <- read_excel('Exemplo2.2.2.xlsx', col_names = F)
+
+# Alterando nome da única coluna no conjunto de dados 
+
+names(df) <- 'número de pessoas'
+
+
+```
+---
+
+##### <span style='color:darkcyan'>**Solução 2**</span>
+
+---
+
+
+```{r}
+
+# Transformando conjunto de dados em tabela 
+
+df2 <- table(df)
+
+df2
+
+df2 <- data.frame(df2)
+
+# Aplicando soma acumulada
+
+cumsum_df2 <- cumsum(df2$Freq)
+
+cumsum_df2
+
+# Criando tabela de frequências
+
+tabela <- data.frame(Freq.abs. = as.numeric(df2$Freq),
+                     Freq.acc. = as.numeric(cumsum_df2),
+                     Freq.rel. = round(as.numeric(df2$Freq / sum(df2$Freq)), digits = 2),
+                     Freq.rel.acc = round(as.numeric(cumsum_df2 / sum(df2$Freq)), digits = 2))
+rownames(tabela) <- df2$número.de.pessoas
+  
+tabela
+
+
+
+```
+
