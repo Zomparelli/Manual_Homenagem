@@ -6,7 +6,7 @@ output: html_document
 ---
 ---
 
-#### Este é um arquivo em homenagem a esses dois brilhantes brasileiros, merecedores de agradecimentos em vida, por serem professores incríveis e influenciarem tantas alunas e tantos alunos
+#### Este é um arquivo em agradeciemnto a esses dois brilhantes brasileiros, merecedores de homenagens em vida, por serem professores incríveis e influenciarem tantas alunas e tantos alunos
 
 ---
 
